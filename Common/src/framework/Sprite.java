@@ -1,22 +1,16 @@
 package framework;
 
-import java.io.Serializable;
 import java.util.HashMap;
 
+public class Sprite{
 
-
-public class Sprite implements Serializable{
-	
-	private static final long serialVersionUID = 1L;
 	private double x, y, vx, vy;
 	private long lastCheck;
 	private String animationType;
 	transient private HashMap<String, Animation> animation;
 	private char direction;
-	protected double speed;
-	protected int damage;
-	protected boolean knockback;
-	
+	private double speed;
+
 	public Sprite()
 	{
 		x = y = vx = vy = 0;
@@ -25,58 +19,58 @@ public class Sprite implements Serializable{
 		animationType = null;
 		animation = new HashMap<String, Animation>();
 		direction = 'N';
-		damage = 0;
 	}
-	
+
 	public void reConstruct()
 	{
 		animation = new HashMap<String, Animation>();
 	}
-	
-	//change position
+
+	// change position
+	@Deprecated
 	public void update()
 	{
 		int timePassed = (int)(System.currentTimeMillis() - lastCheck);
 		lastCheck = System.currentTimeMillis();
-		x += vx*timePassed;
-		y += vy*timePassed;
+		x += vx * timePassed;
+		y += vy * timePassed;
 	}
-	
+
 	public Rectangle getBounds()
 	{
 		return new Rectangle((int)getX(), (int)getY(), getWidth(), getHeight());
 	}
-	
+
 	public void addAnimation(String name, Animation a)
 	{
 		animation.put(name, a);
 	}
-	
+
 	public void setAnimationType(String animationType)
 	{
 		this.animationType = animationType;
 	}
-	
+
 	public double getX()
 	{
 		return x;
 	}
-	
+
 	public double getY()
 	{
 		return y;
 	}
-	
+
 	public synchronized void setX(double x)
 	{
 		this.x = x;
 	}
-	
+
 	public synchronized void setY(double y)
 	{
 		this.y = y;
 	}
-	
+
 	public synchronized void setPosition(double x, double y)
 	{
 		this.x = x;
@@ -85,34 +79,34 @@ public class Sprite implements Serializable{
 
 	public int getCenterX()
 	{
-		return (int) (this.x + getWidth()/2.0);
+		return (int)(this.x + getWidth() / 2.0);
 	}
-	
+
 	public int getCenterY()
 	{
-		return (int) (this.y + getHeight()/2.0);
+		return (int)(this.y + getHeight() / 2.0);
 	}
-	
+
 	public int getWidth()
 	{
 		return animation.get(animationType).getCurrentImage().getWidth();
 	}
-	
+
 	public int getHeight()
 	{
 		return animation.get(animationType).getCurrentImage().getHeight();
 	}
-	
+
 	public double getVelX()
 	{
 		return vx;
 	}
-	
+
 	public double getVelY()
 	{
 		return vy;
 	}
-	
+
 	public void setVelX(double vx)
 	{
 		this.vx = vx;
@@ -121,7 +115,7 @@ public class Sprite implements Serializable{
 		else
 			startAnimation();
 	}
-	
+
 	public void setVelY(double vy)
 	{
 		this.vy = vy;
@@ -130,17 +124,17 @@ public class Sprite implements Serializable{
 		else
 			startAnimation();
 	}
-	
+
 	public void setDirection(char direction)
 	{
 		this.direction = direction;
 	}
-	
+
 	public char getDirection()
 	{
 		return direction;
 	}
-	
+
 	public void moveUp()
 	{
 		setVelY(-speed);
@@ -148,7 +142,7 @@ public class Sprite implements Serializable{
 		setAnimationType("up");
 		setDirection('U');
 	}
-	
+
 	public void moveDown()
 	{
 		setVelY(speed);
@@ -156,7 +150,7 @@ public class Sprite implements Serializable{
 		setAnimationType("down");
 		setDirection('D');
 	}
-	
+
 	public void moveLeft()
 	{
 		setVelX(-speed);
@@ -164,7 +158,7 @@ public class Sprite implements Serializable{
 		setAnimationType("left");
 		setDirection('L');
 	}
-	
+
 	public void moveRight()
 	{
 		setVelX(speed);
@@ -172,7 +166,7 @@ public class Sprite implements Serializable{
 		setAnimationType("right");
 		setDirection('R');
 	}
-	
+
 	public void stopMovement()
 	{
 		setVelX(0);
@@ -181,69 +175,86 @@ public class Sprite implements Serializable{
 		restartAnimation();
 		setDirection('N');
 	}
-	
+
+	public double getSpeed()
+	{
+		return speed;
+	}
+
+	protected void setSpeed(double speed)
+	{
+		this.speed = speed;
+	}
+
 	public void restartAnimation()
 	{
 		animation.get(animationType).restartAnimation();
 	}
-	
+
 	public void stopAnimation()
 	{
 		animation.get(animationType).stopAnimation();
 	}
-	
+
 	public void startAnimation()
 	{
 		animation.get(animationType).startAnimation();
 	}
-	
+
 	public boolean pointOnSprite(Point p)
 	{
-		int x = (int) p.getX();
-		int y = (int) p.getY();
-		if(x > this.x && x < this.x + getWidth() && y > this.y && y < this.y + getHeight())
+		int x = (int)p.getX();
+		int y = (int)p.getY();
+		if(x > this.x && x < this.x + getWidth() && y > this.y
+				&& y < this.y + getHeight())
 			return true;
 		return false;
 	}
-	
+
 	public boolean isTouching(Sprite s)
 	{
 		if(this.x > s.getX())
 		{
 			if(this.y > s.getY())
 			{
-				if(this.x - s.getX() < s.getWidth() && this.y - s.getY() < s.getHeight())
+				if(this.x - s.getX() < s.getWidth()
+						&& this.y - s.getY() < s.getHeight())
 					return true;
 			}
-			else if(this.x - s.getX() < s.getWidth() && s.getY() - this.y < this.getHeight())
+			else if(this.x - s.getX() < s.getWidth()
+					&& s.getY() - this.y < this.getHeight())
 				return true;
 		}
 		else if(this.y > s.getY())
 		{
-			if(s.getX() - this.x < this.getWidth() && this.y - s.getY() < s.getHeight())
+			if(s.getX() - this.x < this.getWidth()
+					&& this.y - s.getY() < s.getHeight())
 				return true;
 		}
-		else if(s.getX() - this.x < this.getWidth() && s.getY() - this.y < this.getHeight())
+		else if(s.getX() - this.x < this.getWidth()
+				&& s.getY() - this.y < this.getHeight())
 			return true;
 		return false;
 	}
-	
-	public void setDamage(int damage)
-	{
-		this.damage = damage;
-	}
-	
+
 	public Image getImage()
 	{
 		update();
 		return animation.get(animationType).getCurrentImage();
 	}
-	
+
 	public void update(long timePassed)
 	{
-		animation.get(animationType).update(timePassed);
+		if(animation != null)
+		{
+			Animation currentAnimation = animation.get(animationType);
+			if(currentAnimation != null)
+			{
+				currentAnimation.update(timePassed);
+			}
+		}
 	}
-	
+
 	public void draw(Graphics g)
 	{
 		g.drawImage(getImage(), (int)getX(), (int)getY());

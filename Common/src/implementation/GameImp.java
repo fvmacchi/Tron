@@ -58,7 +58,7 @@ public class GameImp implements Game, KeyListener{
 		if(currentScreen != null)
 			currentScreen.cleanUp();
 		currentScreen = screen;
-		currentScreen.run();
+		currentScreen.run(this);
 	}
 
 	@Override

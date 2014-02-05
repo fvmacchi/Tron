@@ -27,8 +27,13 @@ public class GraphicsImp implements Graphics{
 
 	@Override
 	public void drawRect(int x, int y, int width, int height) {
-		// TODO Auto-generated method stub
-		
+		g.drawRect(x, y, width, height);
+	}
+	
+	@Override
+	public void drawRect(double x, double y, double width, double height)
+	{
+		drawRect((int)x, (int)y, (int)width, (int)height);
 	}
 
 	@Override
@@ -37,17 +42,24 @@ public class GraphicsImp implements Graphics{
 	}
 
 	@Override
-	public void setColor(int r, int g, int b, int a) {
+	public void setColour(int r, int g, int b, int a) {
 		this.g.setColor(new Color(r, g, b, a));
 	}
 
 	@Override
-	public void setColor(int r, int g, int b) {
-		setColor(r, g, b, 255);
+	public void setColour(int r, int g, int b) {
+		setColour(r, g, b, 255);
 	}
 
+	@Override
+	public void setColour(Colour colour)
+	{
+		setColour(colour.getRed(), colour.getBlue(), colour.getGreen());
+	}
+	
 	@Override
 	public void dispose() {
 		g.dispose();
 	}
+
 }
