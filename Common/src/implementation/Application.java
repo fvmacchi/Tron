@@ -11,4 +11,10 @@ public class Application {
 		return game;
 	}
 	
+	public static void init(Initializer initializer)
+	{
+		game = initializer.getGame();
+		game.startGame(initializer.getStartScreen());
+	}
+	
 }
