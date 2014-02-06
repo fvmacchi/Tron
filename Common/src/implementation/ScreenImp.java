@@ -10,7 +10,7 @@ import framework.Screen;
 
 public abstract class ScreenImp extends Screen{
 
-	private static final long MILLISECONDS_PER_FRAME = 16;
+	private static final long MILLISECONDS_PER_FRAME = 17;
 
 	private boolean running;
 	private boolean paused;
