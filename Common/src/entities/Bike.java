@@ -9,7 +9,7 @@ public class Bike extends Sprite{
 
 	public Bike(Controller controller)
 	{
-		setSpeed(5);
+		setSpeed(1);
 		controller.control(this);
 	}
 	

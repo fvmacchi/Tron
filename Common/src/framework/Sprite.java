@@ -3,6 +3,8 @@ package framework;
 import java.util.HashMap;
 
 public class Sprite{
+	
+	private static final double SPEED_SCALE = 10000000;
 
 	private double x, y, vx, vy;
 	private long lastCheck;
@@ -32,8 +34,7 @@ public class Sprite{
 	{
 		int timePassed = (int)(System.currentTimeMillis() - lastCheck);
 		lastCheck = System.currentTimeMillis();
-		x += vx * timePassed;
-		y += vy * timePassed;
+		update(timePassed);
 	}
 
 	public Rectangle getBounds()
@@ -137,7 +138,7 @@ public class Sprite{
 
 	public void moveUp()
 	{
-		setVelY(-speed);
+		setVelY(-getSpeed());
 		setVelX(0);
 		setAnimationType("up");
 		setDirection('U');
@@ -145,7 +146,7 @@ public class Sprite{
 
 	public void moveDown()
 	{
-		setVelY(speed);
+		setVelY(getSpeed());
 		setVelX(0);
 		setAnimationType("down");
 		setDirection('D');
@@ -153,7 +154,7 @@ public class Sprite{
 
 	public void moveLeft()
 	{
-		setVelX(-speed);
+		setVelX(-getSpeed());
 		setVelY(0);
 		setAnimationType("left");
 		setDirection('L');
@@ -161,7 +162,7 @@ public class Sprite{
 
 	public void moveRight()
 	{
-		setVelX(speed);
+		setVelX(getSpeed());
 		setVelY(0);
 		setAnimationType("right");
 		setDirection('R');
@@ -183,7 +184,7 @@ public class Sprite{
 
 	protected void setSpeed(double speed)
 	{
-		this.speed = speed;
+		this.speed = speed/SPEED_SCALE;
 	}
 
 	public void restartAnimation()
@@ -198,7 +199,14 @@ public class Sprite{
 
 	public void startAnimation()
 	{
-		animation.get(animationType).startAnimation();
+		if(animation != null)
+		{
+			Animation currentAnimation = animation.get(animationType);
+			if(currentAnimation != null)
+			{
+				currentAnimation.startAnimation();
+			}
+		}
 	}
 
 	public boolean pointOnSprite(Point p)
@@ -239,12 +247,13 @@ public class Sprite{
 
 	public Image getImage()
 	{
-		update();
 		return animation.get(animationType).getCurrentImage();
 	}
 
 	public void update(long timePassed)
 	{
+		x += vx * timePassed;
+		y += vy * timePassed;
 		if(animation != null)
 		{
 			Animation currentAnimation = animation.get(animationType);
