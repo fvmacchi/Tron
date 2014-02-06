@@ -9,7 +9,7 @@ public class Bike extends Sprite{
 
 	public Bike(Controller controller)
 	{
-		setSpeed(1);
+		setSpeed(2);
 		controller.control(this);
 	}
 	
@@ -23,12 +23,12 @@ public class Bike extends Sprite{
 	@Override
 	public int getWidth()
 	{
-		return 10;
+		return 2;
 	}
 	
 	@Override
 	public int getHeight()
 	{
-		return 10;
+		return 2;
 	}
 }

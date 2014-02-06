@@ -54,7 +54,7 @@ public class GraphicsImp implements Graphics{
 	@Override
 	public void setColour(Colour colour)
 	{
-		setColour(colour.getRed(), colour.getBlue(), colour.getGreen());
+		setColour(colour.getRed(), colour.getGreen(), colour.getBlue());
 	}
 	
 	@Override
