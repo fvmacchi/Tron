@@ -16,6 +16,8 @@ public class Arena extends Sprite{
 	private List<Bike> bikes = new ArrayList<Bike>();
 
 	private Screen screenContext = null;
+	
+	private boolean battleInProgress = false;
 
 	public Arena(Screen context)
 	{
@@ -36,10 +38,35 @@ public class Arena extends Sprite{
 
 	public void start()
 	{
-		Bike bike = getBikes().get(0);
-		bike.setPosition(WIDTH / 2, HEIGHT / 2);
+		int numBikes = getBikes().size();
+		Bike bike = null;
+		switch (numBikes)
+		{
+		case 4:
+			bike = bikes.get(3);
+			bike.setPosition(WIDTH / 4, 3 * HEIGHT / 4);
+			bike.setColour(Colour.YELLOW);
+		case 3:
+			bike = bikes.get(2);
+			bike.setPosition(3 * WIDTH / 4, HEIGHT / 4);
+			bike.setColour(Colour.GREEN);
+		case 2:
+			bike = getBikes().get(1);
+			bike.setPosition(3 * WIDTH / 4, 3 * HEIGHT / 4);
+			bike.setColour(Colour.RED);
+		case 1:
+			bike = getBikes().get(0);
+			bike.setPosition(WIDTH / 4, HEIGHT / 4);
+			bike.setColour(Colour.BLUE);
+		}
+		battleInProgress = true;
 	}
 
+	public boolean isBattleInProgress()
+	{
+		return battleInProgress;
+	}
+	
 	@Override
 	public void draw(Graphics g)
 	{
@@ -64,5 +91,10 @@ public class Arena extends Sprite{
 			bike.update(timePassed);
 		}
 	}
-
+	
+	public void cleanUp()
+	{
+		battleInProgress = false;
+	}
+	
 }

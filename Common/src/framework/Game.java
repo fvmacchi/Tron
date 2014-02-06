@@ -1,5 +1,7 @@
 package framework;
 
+import java.util.List;
+
 public interface Game {
 	
 	public void startGame(Screen startScreen);
@@ -21,5 +23,7 @@ public interface Game {
 	public int getScreenWidth();
 	
 	public int getScreenHeight();
+	
+	public List<Thread> getThreads();
 	
 }
