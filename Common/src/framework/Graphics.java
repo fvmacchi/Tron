@@ -18,6 +18,16 @@ public interface Graphics{
 	
 	public void setColour(Colour colour);
 
+	public void setScale(double scale);
+	
+	public void setOffset(double x, double y);
+	
+	public double getScale();
+	
+	public int getOffsetX();
+	
+	public int getOffsetY();
+	
 	public void dispose();
 
 	public enum Colour{

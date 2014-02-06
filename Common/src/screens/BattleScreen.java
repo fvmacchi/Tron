@@ -17,6 +17,7 @@ public class BattleScreen extends ScreenImp{
 		super.init(game);
 		arena = new Arena(this);
 		arena.addBike(new Bike(new KeyboardController()));
+		arena.start();
 	}
 
 	@Override

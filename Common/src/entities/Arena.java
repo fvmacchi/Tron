@@ -20,6 +20,8 @@ public class Arena extends Sprite{
 	public Arena(Screen context)
 	{
 		this.screenContext = context;
+		setPosition((screenContext.getGame().getScreenWidth() - WIDTH) / 2,
+				(screenContext.getGame().getScreenHeight() - HEIGHT) / 2);
 	}
 
 	public void addBike(Bike bike)
@@ -27,17 +29,30 @@ public class Arena extends Sprite{
 		bikes.add(bike);
 	}
 
+	public List<Bike> getBikes()
+	{
+		return bikes;
+	}
+
+	public void start()
+	{
+		Bike bike = getBikes().get(0);
+		bike.setPosition(WIDTH / 2, HEIGHT / 2);
+	}
+
 	@Override
 	public void draw(Graphics g)
 	{
-		for(Bike bike: bikes)
-		{
-			bike.draw(g);
-		}
 		g.setColour(Colour.WHITE);
 		g.drawRect((screenContext.getGame().getScreenWidth() - WIDTH) / 2,
 				(screenContext.getGame().getScreenHeight() - HEIGHT) / 2,
 				WIDTH, HEIGHT);
+		g.setOffset(getX(), getY());
+		for(Bike bike: bikes)
+		{
+			bike.draw(g);
+		}
+		g.setOffset(0, 0);
 	}
 
 	@Override
