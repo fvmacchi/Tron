@@ -6,9 +6,6 @@ import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 import framework.Game;
 import framework.Graphics;
@@ -20,7 +17,6 @@ public class GameImp implements Game, KeyListener{
 	private Screen currentScreen;
 	private Resources resources;
 	private ScreenManager screenManager;
-	private List<Thread> threads = new ArrayList<Thread>();
 
 	
 	@Override
@@ -40,12 +36,6 @@ public class GameImp implements Game, KeyListener{
 		goToScreen(startScreen);
 	}
 
-	@Override
-	public List<Thread> getThreads()
-	{
-		return threads;
-	}
-	
 	@Override
 	public void stopGame() {
 		screenManager.getFullScreenWindow().removeKeyListener(this);

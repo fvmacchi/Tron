@@ -1,0 +1,10 @@
+java.lang.NullPointerException
+implementation.GraphicsImp.setColour(GraphicsImp.java:59)
+implementation.GraphicsImp.setColour(GraphicsImp.java:65)
+implementation.ScreenImp.clear(ScreenImp.java:149)
+implementation.ScreenImp.gameLoop(ScreenImp.java:95)
+implementation.ScreenImp.run(ScreenImp.java:32)
+implementation.GameImp.goToScreen(GameImp.java:61)
+implementation.GameImp.startGame(GameImp.java:36)
+implementation.Application.init(Application.java:17)
+core.Start.main(Start.java:14)

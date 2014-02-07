@@ -1,12 +1,14 @@
 package controls;
 
-import implementation.Application;
 import entities.Arena;
-import entities.Bike;
 
-public class ComputerController extends Controller implements Runnable{
+public class ComputerController extends Controller{
 
 	private Arena arena = null;
+	
+	private int timeBetweenTurn = 300;
+	
+	private int timeLastPassed = 0;
 
 	public ComputerController(Arena arena)
 	{
@@ -14,47 +16,33 @@ public class ComputerController extends Controller implements Runnable{
 	}
 
 	@Override
-	public void control(Bike bike)
+	public void update(long timePassed)
 	{
-		super.control(bike);
-		Thread thread = new Thread(this);
-		Application.getGame().getThreads().add(thread);
-		thread.start();
-	}
-
-	@Override
-	public void run()
-	{
-		while (arena.isBattleInProgress())
+		timePassed /= 1000000;
+		if(timePassed + timeLastPassed < timeBetweenTurn)
 		{
-			try
-			{
-				Thread.sleep(500);
-			}
-			catch(InterruptedException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			int direction = (int)(Math.random() * 4) + 1;
-			switch (direction)
-			{
-			case 1:
-				getBike().moveUp();
-				break;
-			case 2:
-				getBike().moveDown();
-				break;
-			case 3:
-				getBike().moveLeft();
-				break;
-			case 4:
-				getBike().moveRight();
-				break;
-			default:
-				break;	
-			}
+			timeLastPassed += timePassed;
+			return;
+		}
+		timeLastPassed = (int)(timeLastPassed + timePassed - timeBetweenTurn);
+		int direction = (int)(Math.random() * 4) + 1;
+		switch (direction)
+		{
+		case 1:
+			getBike().moveUp();
+			break;
+		case 2:
+			getBike().moveDown();
+			break;
+		case 3:
+			getBike().moveLeft();
+			break;
+		case 4:
+			getBike().moveRight();
+			break;
+		default:
+			System.out.println(direction);
+			break;
 		}
 	}
-
 }
